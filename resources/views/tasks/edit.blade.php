@@ -18,7 +18,7 @@
                     <label for="status" class="label">
                         <span class="label-text">ステータス:</span>
                     </label>
-                    <input type="text" name="status" value="{{ $task->content }}" class="input input-bordered w-full">
+                    <input type="text" name="status" value="{{ $task->status }}" class="input input-bordered w-full">
                 </div>
 
                 

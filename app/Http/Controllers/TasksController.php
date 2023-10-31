@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Models\Task; 
 
+
+
 class TasksController extends Controller
 {
     /**
@@ -15,7 +17,7 @@ class TasksController extends Controller
      */
     public function index()
     {
-        
+     
          // メッセージ一覧を取得
         $tasks = Task::all();       
 
@@ -32,7 +34,7 @@ class TasksController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+   public function create()
     {
         
          $task = new Task;
@@ -58,12 +60,19 @@ class TasksController extends Controller
         ]);
         
         
-
+          // 認証済みユーザ（閲覧者）の投稿として作成（リクエストされた値をもとに作成）
+        $request->user()->tasks()->create([
+            'content' => $request->content,
+            'status' => $request->status,
+        ]);
+        
+/*
          // メッセージを作成
         $task = new Task;
         $task ->status = $request->status;
         $task ->content = $request->content;
         $task ->save();
+*/
 
         // トップページへリダイレクトさせる
         return redirect('/');
@@ -147,10 +156,17 @@ class TasksController extends Controller
         
          // idの値でメッセージを検索して取得
         $task = Task::findOrFail($id);
-        // メッセージを削除
-        $task->delete();
+        
+        
+       // 認証済みユーザ（閲覧者）がその投稿の所有者である場合は投稿を削除
+        if (\Auth::id() === $task->user_id) {
+            $task->delete();
+            return redirect('/')
+                ->with('success','Delete Successful');
+        }
 
-        // トップページへリダイレクトさせる
-        return redirect('/');
+        // 前のURLへリダイレクトさせる
+        return redirect('/')
+            ->with('Delete Failed');
     }
 }

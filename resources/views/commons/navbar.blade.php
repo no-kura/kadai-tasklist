@@ -6,6 +6,7 @@
         </div>
 
         <div class="flex-none">
+            
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <ul tabindex="0" class="menu hidden lg:menu-horizontal">

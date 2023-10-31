@@ -4,11 +4,16 @@
 
 <!-- ここにページ毎のコンテンツを書く -->
 
+<div class="prose ml-4">
+        <h3>タスク 一覧</h3>
+    </div>
+
+
     @if (isset($tasks))
         <table class="table table-zebra w-full my-4">
             <thead>
                 <tr>
-                    <th>id</th>
+                    <th>ID</th>
                     <th>ステータス</th>
                     <th>タスク</th>
                 </tr>
@@ -25,9 +30,11 @@
         </table>
     @endif
 
- {{-- メッセージ作成ページへのリンク --}}                                                   
-    <a class="btn btn-primary" href="{{ route('tasks.create') }}">新規タスクの投稿</a>
 
+
+
+   {{-- メッセージ作成ページへのリンク --}}                                                  
+    <a class="btn btn-primary" href="{{ route('tasks.create') }}">新規メッセージの投稿</a> 
 
 
 @endsection
